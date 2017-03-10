@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require("lodash");
+
 // customized for this use-case
 const isObject = x =>
 	typeof x === 'object' &&
@@ -9,7 +11,7 @@ const isObject = x =>
 	!(x instanceof Date);
 
 module.exports = function mapObj(obj, fn, opts, seen) {
-	opts = Object.assign({
+	opts = _.assign({
 		deep: false,
 		target: {}
 	}, opts);

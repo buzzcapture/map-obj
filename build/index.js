@@ -1,15 +1,16 @@
 'use strict';
 
-// customized for this use-case
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _ = require("lodash");
+
+// customized for this use-case
 var isObject = function isObject(x) {
 	return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x !== null && !(x instanceof RegExp) && !(x instanceof Error) && !(x instanceof Date);
 };
 
 module.exports = function mapObj(obj, fn, opts, seen) {
-	opts = Object.assign({
+	opts = _.assign({
 		deep: false,
 		target: {}
 	}, opts);
