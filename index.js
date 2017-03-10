@@ -3,45 +3,41 @@
 var _ = require("lodash");
 
 // customized for this use-case
-const isObject = x =>
-	typeof x === 'object' &&
-	x !== null &&
-	!(x instanceof RegExp) &&
-	!(x instanceof Error) &&
-	!(x instanceof Date);
+const isObject = obj => typeof obj === 'object' && obj !== null && !(obj instanceof RegExp) &&
+	!(obj instanceof Error) && !(obj instanceof Date);
 
-module.exports = function mapObj(obj, fn, opts, seen) {
+module.exports = function mapObj(objectToMap, fn, opts, seen) {
+	seen = seen || new WeakMap();
+
+	if (seen.has(objectToMap)) {
+		return seen.get(objectToMap);
+	}
+
 	opts = _.assign({
 		deep: false,
 		target: {}
 	}, opts);
 
-	seen = seen || new WeakMap();
-
-	if (seen.has(obj)) {
-		return seen.get(obj);
-	}
-
-	seen.set(obj, opts.target);
+	seen.set(objectToMap, opts.target);
 
 	const target = opts.target;
 	delete opts.target;
 
-	for (const key of Object.keys(obj)) {
-		const val = obj[key];
-		const res = fn(key, val, obj);
-		let newVal = res[1];
+	_.forOwn(objectToMap, (val, key) => {
+		let result = fn(key, val, objectToMap);
+		let newValue = result[1];
 
-		if (opts.deep && isObject(newVal)) {
-			if (Array.isArray(newVal)) {
-				newVal = newVal.map(x => isObject(x) ? mapObj(x, fn, opts, seen) : x);
+		if (opts.deep && isObject(newValue)) {
+			if (Array.isArray(newValue)) {
+				newValue = newValue.map(objectToMap => isObject(objectToMap) ?
+					mapObj(objectToMap, fn, opts, seen) : objectToMap);
 			} else {
-				newVal = mapObj(newVal, fn, opts, seen);
+				newValue = mapObj(newValue, fn, opts, seen);
 			}
 		}
 
-		target[res[0]] = newVal;
-	}
+		target[_.head(result)] = newValue;
+	});
 
 	return target;
 };
