@@ -3,10 +3,11 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _ = require("lodash");
+var WeakMap = WeakMap || require("weak-map");
 
 // customized for this use-case
 var isObject = function isObject(obj) {
-	return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj !== null && !(obj instanceof RegExp) && !(obj instanceof Error) && !(obj instanceof Date);
+	return (typeof obj === "undefined" ? "undefined" : _typeof(obj)) === 'object' && obj !== null && !(obj instanceof RegExp) && !(obj instanceof Error) && !(obj instanceof Date);
 };
 
 module.exports = function mapObj(objectToMap, fn, opts, seen) {

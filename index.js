@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require("lodash");
+const _ = require("lodash");
+const WeakMap = WeakMap || require("weak-map");
 
 // customized for this use-case
 const isObject = obj => typeof obj === 'object' && obj !== null && !(obj instanceof RegExp) &&

@@ -47,6 +47,7 @@
     "esnext": true
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "weak-map": "^1.0.5"
   }
 }
