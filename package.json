@@ -9,11 +9,13 @@
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
+  "main": "./build/index.js",
   "engines": {
     "node": ">=4"
   },
   "scripts": {
-    "test": "xo && ava"
+    "test": "xo && ava",
+    "build": "babel ./index.js -d ./build"
   },
   "files": [
     "index.js"
@@ -37,6 +39,8 @@
   ],
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.23.0",
+    "babel-preset-env": "^1.2.1",
     "xo": "*"
   },
   "xo": {
